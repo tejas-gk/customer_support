@@ -8,21 +8,24 @@ import {
     Animated,
     StyleSheet
 } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
+import { Stack } from "expo-router";
+import { useNavigation } from '@react-navigation/native';
 import Hero from '../components/hero';
 import ScreenHeaderBtn from '../components/screen-header-btn';
+
 
 const { COLORS, icons, SIZES, FONTS, images } = require('../constants');
 
 const Home = () => {
-    const router = useRouter();
+    const navigation = useNavigation();
 
-    // State for managing drawer visibility and animation
-    const [drawerOpen, setDrawerOpen] = useState(false);
+    const navigateToTransactionHistory=()=>{
+
+        navigation.navigate('PhoneScreen')
+    }
+    const [isDrawerOpen, setDrawerOpen] = useState(false);
     const drawerWidth = 200;
     const animationValue = new Animated.Value(0);
-
-     const [isDrawerOpen, setiSDrawerOpen] = useState(false);
 
     const toggleDrawer = () => {
         setDrawerOpen(!isDrawerOpen);
@@ -54,13 +57,13 @@ const Home = () => {
                 }}
             />
 
-             {isDrawerOpen && (
-        <View style={styles.drawer}>
-          <TouchableOpacity onPress={toggleDrawer}>
-            <Text onClick={toggleDrawer}>Close Drawer</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+            {isDrawerOpen && (
+                <View style={styles.drawer}>
+                    <TouchableOpacity onPress={toggleDrawer}>
+                        <Text onClick={toggleDrawer}>Close Drawer</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
 
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{
@@ -69,6 +72,11 @@ const Home = () => {
                 }}>
                     <Hero />
                     <Text>Hello</Text>
+                    
+                    {/* Add a button to navigate to the HomePage */}
+                    <TouchableOpacity onPress={navigateToTransactionHistory}>
+                        <Text>Go to Transaction History</Text>
+                    </TouchableOpacity>
                 </View>
             </ScrollView>
         </SafeAreaView>
@@ -76,19 +84,6 @@ const Home = () => {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: 16,
-    },
-    content: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
     drawer: {
         position: 'absolute',
         top: 0,
@@ -99,6 +94,7 @@ const styles = StyleSheet.create({
         borderRightWidth: 1,
         borderColor: '#CCC',
     },
+  
 });
 
 export default Home;
